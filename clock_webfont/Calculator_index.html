@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<style>
+*{
+    margin: auto;
+    margin-top: 0;
+    margin-left: 0;
+
+}
+#calcbody{
+    width: 800px;
+    height: 500px;
+    background-color: blueviolet;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    gap: 15px;
+    padding: 10px;
+}
+.calcaff{
+    width: 800px;
+    height: 50px;
+    background-color: beige;
+
+}
+
+#aff{
+    width: 100%;
+    height: 50px;
+    text-align: end;
+    margin: auto;
+    font-size: 2em;
+}
+.calcbutton{
+    width: 100%;
+    height: 100%;
+}
+#zero{
+    grid-column: 5 / span 2 ;
+}
+
+#equal{
+    grid-area: 5 / 8 / 7 / 8
+}
+
+</style>
+
+<body>
+    <div class="calcaff" id="calcaff">
+        <p id="aff">0</p>        
+    </div>
+    <div id="calcbody">
+        <button class="calcbutton" id="degrad" onclick="degtorad(this.innerText)">Rad</button>
+        <button class="calcbutton">(</button>
+        <button class="calcbutton">)</button>
+        <button class="calcbutton" onclick="percent()">%</button>
+        <button class="calcbutton">MC</button>
+        <button class="calcbutton">M+</button>
+        <button class="calcbutton">M-</button>
+        <button class="calcbutton">MR</button>
+        <button class="calcbutton" onclick="inverse()">1/x</button>
+        <button class="calcbutton" onclick="power(2)">x²</button>
+        <button class="calcbutton" onclick="power(3)">x³</button>
+        <button class="calcbutton" onclick="power(22)">Yx</button>
+        <button class="calcbutton" onclick="cbutton()">C</button>
+        <button class="calcbutton" onclick="plusmoins()">+/-</button>
+        <button class="calcbutton" onclick="operation2(this.innerText)">/</button>
+        <button class="calcbutton" onclick="operation2(this.innerText)">*</button>
+        <button class="calcbutton" onclick="xfactoriel()">x!</button>
+        <button class="calcbutton" onclick="sqrt()">√</button>
+        <button class="calcbutton" onclick="power(33)">x√y</button>
+        <button class="calcbutton" onclick="logexp(this.innerText)">log</button>
+        <button class="calcbutton" onclick="affichage(7)">7</button>
+        <button class="calcbutton" onclick="affichage(8)">8</button>
+        <button class="calcbutton" onclick="affichage(9)">9</button>
+        <button class="calcbutton" onclick="operation(this.innerText)">-</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">sin</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">cos</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">tan</button>
+        <button class="calcbutton" onclick="logexp(this.innerText)">ln</button>
+        <button class="calcbutton" onclick="affichage(4)">4</button>
+        <button class="calcbutton" onclick="affichage(5)">5</button>
+        <button class="calcbutton" onclick="affichage(6)">6</button>
+        <button class="calcbutton" onclick="operation(this.innerText)">+</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">sinh</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">cosh</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">tanh</button>
+        <button class="calcbutton" onclick="logexp(this.innerText)">eX</button>
+        <button class="calcbutton" onclick="affichage(1)">1</button>
+        <button class="calcbutton" onclick="affichage(2)">2</button>
+        <button class="calcbutton" onclick="affichage(3)">3</button>
+        <button class="calcbutton" id="equal" onclick="equal()">=</button>
+        <button class="calcbutton">1st</button>
+        <button class="calcbutton" onclick="affichage(3.141592653589793)">π</button> 
+        <button class="calcbutton">EE</button>
+        <button class="calcbutton" onclick="logexp(this.innerText)">rnd</button>
+        <button class="calcbutton" id="zero" onclick="affichage(0)">0</button>
+        <button class="calcbutton" onclick="affichage('.')">.</button>
+
+    </Div>
+</body>
+<script>
+        var ini=0, degrad=0, j=0, con=0
+        var val = document.getElementById("aff")
+        var cala=0, calb=0, calp=0, def=0, op2=0, op=0
+        var calcul =[] , pow =[]
+        var reset = 0
+        
+        function Display(v) {
+            val.innerText = ""
+            var modif = document.createTextNode(v)
+            val.appendChild(modif)
+        }
+
+        function affichage(valeur) {
+            op2 = 0
+            op = 0
+            
+            if (reset == 1 ) {
+            cala = 0
+            calb = 0
+            calp = 0
+            calcul = []
+            con = 0
+            def = 0
+            j = 0
+            }
+            reset = 0
+            if (def == 0) {
+                if (ini== 0) {
+                    cala = valeur
+                    Display(cala)
+                }
+                else{
+                    cala = val.innerText + valeur
+                    Display(cala)
+                }
+                ini++
+            }
+            else if (def == 1) {
+                if (ini== 0) {
+                    calb = valeur
+                    Display(calb)
+                }
+                else{
+                    calb = val.innerText + valeur
+                    Display(calb)
+                }
+                ini++
+            }
+            else if (def == 2) {
+                if (ini== 0) {
+                    calp = valeur
+                    Display(calp)
+                }
+                else{
+                    calp = val.innerText + valeur
+                    Display(calp)
+                }
+                ini++
+            }
+            
+            
+
+        }
+         
+        function operation(opp) {
+            reset = 0
+            op2 = 0
+            if (cala==0) {
+                
+            }
+
+            else if(def==0 && op == 0){
+                calcul[j]=cala
+                j++
+                calcul[j]=opp
+                j++
+                 ini=0
+                 def = 1
+            }
+            else if (def ==1 && op == 0) {
+                calcul[j] = calb
+                j++
+                calcul[j] = opp
+                j++
+                calb = 0
+                ini = 0
+            }
+
+            else if (def == 2 && op == 0 && con == 1) {
+                if (calb == 0) {
+                    def = 0
+                    power(22)
+                    calcul[j] = pow[0]
+                    j++
+                    calcul[j]=opp
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                    con = 0
+                }
+                else if (calb != 0) {
+                    def = 1
+                    power(22)
+                    calcul[j] = pow[0]
+                    j++
+                    calcul[j] = opp
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                    con = 0
+                }
+
+                
+            }
+
+            else if (def == 2 && op == 0 && con == 2) {
+                if (calb == 0) {
+                    def = 0
+                    power(33)
+                    calcul[j] = pow[0]
+                    j++
+                    calcul[j]=opp
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                    con = 0
+                }
+                else if (calb != 0) {
+                    def = 1
+                    power(33)
+                    calcul[j] = pow[0]
+                    j++
+                    calcul[j] = opp
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                    con = 0
+                }
+
+                
+            }
+
+            else{
+                calcul[j-1] = opp
+            }
+            
+            op = 1
+        }   
+
+        function operation2(opp) {
+            reset = 0
+            op = 0
+            if (cala==0) {
+                
+            }
+
+            else if(def == 0 && op2 == 0){
+                calcul[j]=cala
+                j++
+                calcul[j]=opp
+                j++
+                 ini=0
+                 def = 1
+            }
+            else if (def ==1 && op2 == 0) {
+                calcul[j] = calb
+                j++
+                calcul[j] = opp
+                j++
+                calb = 0
+                ini = 0
+            }
+
+            else if (def == 2 && op2 == 0 && con == 1) {
+                if (calb == 0) {
+                    def = 0
+                    power(22)
+                    calcul[j] = pow[0]
+                    j++
+                    calcul[j]=opp
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                    con = 0
+                }
+                else if (calb != 0) {
+                    def = 1
+                    power(22)
+                    calcul[j] = pow[0]
+                    j++
+                    calcul[j] = opp
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                    con = 0
+                }
+
+                
+            }
+
+            else if (def == 2 && op2 == 0 && con == 2) {
+                if (calb == 0) {
+                    def = 0
+                    power(33)
+                    calcul[j] = pow[0]
+                    j++
+                    calcul[j]=opp
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                    con = 0
+                }
+                else if (calb != 0) {
+                    def = 1
+                    power(33)
+                    calcul[j] = pow[0]
+                    j++
+                    calcul[j] = opp
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                    con = 0
+                }
+
+                
+            }
+
+            else{
+                calcul[j-1] = opp
+
+            }
+            
+            op2 = 1
+            
+        }   
+                
+        function equal() {
+
+            if (calp != 0) {
+                if (con == 1) {
+                    if (calb == 0) {
+                        def = 0
+                        cala = cala ** calp
+                        pow[0] = cala
+                        calcul[j] = pow[0]
+                        j++
+                        def = 1
+                        calp = 0
+                        ini = 0
+                    }
+                    else if (calb != 0) {
+                        def = 1
+                        calb = calb ** calp
+                        pow[0] = calb
+                        def = 1
+                        calp = 0
+                        ini = 0
+                    }
+                    
+                }
+
+                else if (con = 2) {
+                    if (calb == 0) {
+                    def = 0
+                    cala = cala ** (1/calp)
+                    pow[0] = cala
+                    calcul[j] = pow[0]
+                    j++
+                    def = 1
+                    calp = 0
+                    ini = 0
+                }
+                else if (calb != 0) {
+                    def = 1
+                    calb = calb ** (1/calp)
+                    pow[0] = calb
+                    def = 1
+                    calp = 0
+                    ini = 0
+                }
+                    
+                }
+
+                
+            }
+            calcul[j] = calb
+            cala = eval(calcul.join(' '))
+            calcul = []
+            j=0
+            calb = 0
+            calcul[j] = cala
+            Display(cala)
+            ini=0
+            reset = 1
+
+
+
+        }
+
+        function cbutton() {
+            cala = 0
+            calb = 0
+            calp = 0
+            calcul = []
+            con = 0
+            def = 0
+            j = 0
+            Display(0)
+        }
+
+        function plusmoins() {
+           if (def == 0 || reset == 1) {
+            cala = -cala
+            calcul[0] = cala
+            Display(cala)
+   
+           }
+           else{
+            calb = -calb
+            Display(calb)
+           }            
+        }
+
+        function percent() {
+            if (def == 0 || reset == 1) {
+            cala = cala/100
+            calcul[0] = cala
+            Display(cala)
+   
+           }
+           else{
+            calb = calb/100
+            Display(calb)
+           }
+        }
+      
+        function inverse() {
+            if (def == 0 || reset == 1) {
+          cala = 1/cala
+            calcul[0] = cala
+            Display(cala)
+   
+           }
+           else{
+            calb = 1/calb
+            Display(calb)
+           }
+        }
+
+        function power(po) {
+           
+            if (po == 2) {
+                if (def == 0 || reset == 1) {
+                cala = cala * cala
+                calcul[0] = cala
+                Display(cala)
+   
+            }
+            else{
+                calb = calb * calb
+                Display(calb)
+            }
+            }
+            
+            if (po == 3) {
+                if (def == 0 || reset == 1) {
+                cala = cala * cala * cala
+                calcul[0] = cala
+                Display(cala)
+   
+            }
+            else{
+                calb = calb * calb * calb
+                Display(calb)
+            }
+            }
+
+            if (po == 22) {
+                con=1
+                if (def == 0 || reset == 1) {
+                    if (calp == 0) {
+                        def = 2
+                        ini = 0
+                        
+                    }
+                    else if (calp != 0) {
+                        tmp= cala
+                        var n = parseInt(calp)
+                        cala = cala ** n
+                        pow[0] = cala
+                        Display(cala)
+                    }
+   
+                }
+                else if(def == 1 || reset == 1){
+                    if (calp == 0) {
+                        def = 2
+                        ini = 0
+                        
+                    }
+
+                    else if (calp != 0) {
+                        var n = parseInt(calp)
+                        calb = calb ** n
+                        pow[0] = calb
+                        Display(calb)
+                    }
+
+                }
+            }
+
+            if (po == 33) {
+                con=2
+                if (def == 0 || reset == 1) {
+                    if (calp == 0) {
+                        def = 2
+                        ini = 0
+                        
+                    }
+                    else if (calp != 0) {
+                        tmp= cala
+                        var n = parseInt(calp)
+                        cala = cala ** (1/n)
+                        pow[0] = cala
+                        Display(cala)
+                    }
+   
+                }
+                else if(def == 1 || reset == 1){
+                    if (calp == 0) {
+                        def = 2
+                        ini = 0
+                        
+                    }
+
+                    else if (calp != 0) {
+                        tmp= calb
+                        var n = parseInt(calp)
+                        calb = calb ** (1/n)
+                        pow[0] = calb
+                        Display(calb)
+                    }
+
+                }
+            }
+
+            
+            
+            
+        
+        }
+
+        function sqrt() {
+            if (def == 0 || reset == 1) {
+          cala = Math.sqrt(cala)
+            calcul[0] = cala
+            Display(cala)
+   
+           }
+           else{
+            calb = Math.sqrt(calb)
+            Display(calb)
+           }
+        }
+        
+        function trigo(par) {
+            
+            if (par == "sin") {
+                if (degrad%2 == 0) {
+                    if (def == 0 || reset == 1) {
+                        cala = Math.sin(parseInt(cala))
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.sin(calb)
+                        Display(calb)
+                    }
+                }
+
+                else if (degrad%2 == 1) {
+
+                    if (def == 0 || reset == 1) {
+                        cala = Math.sin(cala*Math.PI/180)
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.sin(calb*Math.PI/180)
+                        Display(calb)
+                    }
+                }
+                
+            }
+
+            if (par == "cos") {
+                if (degrad%2 == 0) {
+                    if (def == 0 || reset == 1) {
+                        cala = Math.cos(parseInt(cala))
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.cos(calb)
+                        Display(calb)
+                    }
+                }
+
+                else if (degrad%2 == 1) {
+
+                    if (def == 0 || reset == 1) {
+                        cala = Math.cos(cala*Math.PI/180)
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.cos(calb*Math.PI/180)
+                        Display(calb)
+                    }
+                }
+                
+            }
+
+            if (par == "tan") {
+                if (degrad%2 == 0) {
+                    if (def == 0 || reset == 1) {
+                        cala = Math.tan(parseInt(cala))
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.tan(calb)
+                        Display(calb)
+                    }
+                }
+
+                else if (degrad%2 == 1) {
+
+                    if (def == 0 || reset == 1) {
+                        cala = Math.tan(cala*Math.PI/180)
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.tan(calb*Math.PI/180)
+                        Display(calb)
+                    }
+                }
+                
+            }
+
+            if (par == "sinh") {
+                if (degrad%2 == 0) {
+                    if (def == 0 || reset == 1) {
+                        cala = Math.sinh(parseInt(cala))
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.sinh(calb)
+                        Display(calb)
+                    }
+                }
+
+                else if (degrad%2 == 1) {
+
+                    if (def == 0 || reset == 1) {
+                        cala = Math.sinh(cala*Math.PI/180)
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.sinh(calb*Math.PI/180)
+                        Display(calb)
+                    }
+                }
+                
+            }
+
+            if (par == "cosh") {
+                if (degrad%2 == 0) {
+                    if (def == 0 || reset == 1) {
+                        cala = Math.cosh(parseInt(cala))
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.cosh(calb)
+                        Display(calb)
+                    }
+                }
+
+                else if (degrad%2 == 1) {
+
+                    if (def == 0 || reset == 1) {
+                        cala = Math.cosh(cala*Math.PI/180)
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.cosh(calb*Math.PI/180)
+                        Display(calb)
+                    }
+                }
+                
+            }
+
+            if (par == "tanh") {
+                if (degrad%2 == 0) {
+                    if (def == 0 || reset == 1) {
+                        cala = Math.tanh(parseInt(cala))
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.tanh(calb)
+                        Display(calb)
+                    }
+                }
+
+                else if (degrad%2 == 1) {
+
+                    if (def == 0 || reset == 1) {
+                        cala = Math.tanh(cala*Math.PI/180)
+                        Display(cala)
+                    }
+
+                    else if(def == 1){
+                        calb = Math.tanh(calb*Math.PI/180)
+                        Display(calb)
+                    }
+                }
+                
+            }
+
+        }
+     
+        function degtorad() {
+            degrad++
+            if (degrad%2 == 1) {
+                var deg = document.getElementById("degrad")
+                deg.innerText="Deg"
+            }
+
+            if (degrad%2 == 0) {
+                var deg = document.getElementById("degrad")
+                deg.innerText="Rad"
+            }
+        }
+
+        function xfactoriel() {
+            if (def == 0 || reset == 1) {
+                cala = parseInt(cala)
+                var x = cala - 1
+                do {
+                    cala = cala * x
+                    x--
+                } while (x>0);
+
+                calcul[0] = cala
+                Display(cala)
+            }
+
+           else{
+                calb = parseInt(calb)
+                var x = calb - 1
+                do {
+                    calb = calb * x
+                    x--
+                } while (x>0);
+                Display(calb)
+           }
+        }
+        
+        function logexp(p) {
+            
+            if (p == "eX") {
+                if (def == 0 || reset == 1) {
+                        cala = Math.exp(cala)
+                        Display(cala)
+                    }
+                else if(def == 1){
+                    calb = Math.exp(calb)
+                    Display(calb)
+                }
+            }
+
+            if (p == "ln") {
+                if (def == 0 || reset == 1) {
+                        cala = Math.log(cala)
+                        Display(cala)
+                    }
+                else if(def == 1){
+                    calb = Math.log(calb)
+                    Display(calb)
+                }
+            }
+
+            if (p == "log") {
+                if (def == 0 || reset == 1) {
+                        cala = Math.log10(cala)
+                        Display(cala)
+                    }
+                else if(def == 1){
+                    calb = Math.log10(calb)
+                    Display(calb)
+                }
+            }
+
+            if (p == "rnd") {
+                if (def == 0 || reset == 1) {
+                        cala = Math.random(5)
+                        Display(cala)
+                    }
+                else if(def == 1){
+                    calb = Math.random(5)
+                    Display(calb)
+                }
+            }
+
+        }
+
+</script>
+</html>

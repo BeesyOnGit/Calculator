@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<style>
+*{
+    margin: auto;
+    margin-top: 0;
+    margin-left: 0;
+
+}
+    
+}
+@font-face {
+    font-family: LEDCalculator;
+    src: url(clock_webfont/LEDCalculator.ttf);
+}
+@font-face {
+    font-family: clock-alarm;
+    src: url(clock_webfont/Calculator-font.ttf);
+}
+@media only screen and (min-width: 600px) {
+    .calchaut{
+    width: 470px;
+    height: 50px;
+    margin: auto;
+    background-color: #908d84;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 4px 3px 3px 3px #292929;
+}
+#calcbody{
+    width: 450px;
+    height: 500px;
+    background-color: #908d84;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    gap: 10px;
+    padding: 10px;
+    border-bottom-left-radius: 5%;
+    border-bottom-right-radius: 5%;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    margin: auto;
+    box-shadow: 4px 3px 3px 3px #292929;
+    margin-bottom: 50px;
+}
+.calcaff{
+    width: 470px;
+    height: 80px;
+    background-color: rgba(98,119,88,255);
+    margin: auto;
+    box-shadow: 4px 3px 3px 3px #292929;
+    padding-top: 8px;
+
+}
+
+#aff{
+    height: 50px;
+    text-align: end;
+    margin: auto;
+    padding-right: 5px;
+    font-size: 2.3em;
+    font-family: clock-alarm;
+    color: #24272c;
+}
+
+#affsecond{
+    height: 30px;
+    text-align: start;
+    margin: auto;
+    padding-left: 10px;
+    font-size: 1.4em;
+    font-family: LEDCalculator;
+    color: #24272c;
+
+}
+.calcbutton{
+    width: 100%;
+    height: 100%;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 12px;
+    border-style: none;
+    background-color: #212629;
+    color: #a5b0b2;
+}
+
+.calcbutton2{
+    width: 50px;
+    height: 100%;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 12px;
+    border-style: none;
+    background-color: #c8c5b4;
+    color: #100f0a;
+}
+
+.calcbutton:hover{
+    background-color: rgba(255, 112, 112, 0.788);
+    color: #212629;
+    box-shadow: 0px 0px 24px 6px rgba(255, 112, 112, 0.788);
+}
+
+.calcbutton2:hover{
+    background-color: rgba(255, 188, 112, 0.788);
+    box-shadow: 0px 0px 24px 6px rgba(255, 188, 112, 0.788);
+}
+
+
+#zero{
+    grid-column: 5 / span 2 ;
+}
+
+#equal{
+    grid-area: 5 / 8 / 7 / 8;
+    background-color: #b66b28;
+}
+
+#equal:hover{
+    background-color: rgba(255, 188, 112, 0.788);
+    box-shadow: 0px 0px 24px 6px rgba(255, 188, 112, 0.788);
+}
+
+#spebutton{
+    background-color: #b66b28;
+}
+
+#spebutton:hover{
+    background-color: rgba(255, 188, 112, 0.788);
+    box-shadow: 0px 0px 24px 6px rgba(255, 188, 112, 0.788);
+}
+
+#radid{
+    margin-left: 20px;
+    color: #24272c;
+    margin-top: 5px;
+}
+}
+
+
+</style>
+
+<body>
+    <div class="calchaut">
+    </div>
+    <div class="calcaff" id="calcaff">
+        <p id="affsecond">0</p>       
+        <p id="aff">0</p>      
+        <p id="radid">Rad</p>  
+    </div>
+    <div id="calcbody">
+        <button class="calcbutton" id="degrad" onclick="degtorad(this.innerText)">Rad</button>
+        <button class="calcbutton">(</button>
+        <button class="calcbutton">)</button>
+        <button class="calcbutton" onclick="percent()">%</button>
+        <button class="calcbutton">MC</button>
+        <button class="calcbutton">M+</button>
+        <button class="calcbutton">M-</button>
+        <button class="calcbutton">MR</button>
+        <button class="calcbutton" onclick="inverse()">1/x</button>
+        <button class="calcbutton" onclick="power(2)">x²</button>
+        <button class="calcbutton" onclick="power(3)">x³</button>
+        <button class="calcbutton" onclick="power(22)">Y<sup>x</sup></button>
+        <button class="calcbutton" id="spebutton" onclick="cbutton()">C</button>
+        <button class="calcbutton" onclick="plusmoins()">+/-</button>
+        <button class="calcbutton" onclick="operation2('/')">÷</button>
+        <button class="calcbutton" onclick="operation2('*')">x</button>
+        <button class="calcbutton" onclick="xfactoriel()">x!</button>
+        <button class="calcbutton" onclick="sqrt()">√</button>
+        <button class="calcbutton" onclick="power(33)">x√y</button>
+        <button class="calcbutton" onclick="logexp(this.innerText)">log</button>
+        <button class="calcbutton2" onclick="affichage(7)">7</button>
+        <button class="calcbutton2" onclick="affichage(8)">8</button>
+        <button class="calcbutton2" onclick="affichage(9)">9</button>
+        <button class="calcbutton" onclick="operation(this.innerText)">-</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">sin</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">cos</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">tan</button>
+        <button class="calcbutton" onclick="logexp(this.innerText)">ln</button>
+        <button class="calcbutton2" onclick="affichage(4)">4</button>
+        <button class="calcbutton2" onclick="affichage(5)">5</button>
+        <button class="calcbutton2" onclick="affichage(6)">6</button>
+        <button class="calcbutton" onclick="operation(this.innerText)">+</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">sinh</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">cosh</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">tanh</button>
+        <button class="calcbutton" onclick="logexp(this.innerText)">eX</button>
+        <button class="calcbutton2" onclick="affichage(1)">1</button>
+        <button class="calcbutton2" onclick="affichage(2)">2</button>
+        <button class="calcbutton2" onclick="affichage(3)">3</button>
+        <button class="calcbutton" id="equal" onclick="equal()">=</button>
+        <button class="calcbutton">1st</button>
+        <button class="calcbutton" onclick="trigo(this.innerText)">π</button> 
+        <button class="calcbutton">EE</button>
+        <button class="calcbutton" onclick="logexp(this.innerText)">rnd</button>
+        <button class="calcbutton" id="zero" onclick="affichage(0)">0</button>
+        <button class="calcbutton" onclick="point('.')">.</button>
+
+    </Div>
+</body>
+<script>
+        var ini=0, degrad=0, j=0, equaliteration=0, repetpoint = 0
+        var val = document.getElementById("aff")
+        var cbut = document.getElementById("spebutton")
+        var cal=0, calp=0, con=0, op2=0, op=0, oppjump=0, cbuttonvalue = 0, eqtmp1 = 0, eqtmp2 = 0
+        var calcul =[]
+        var reset = 0
+        
+        function Display(v) {
+            val.innerText = ""
+            var modif = document.createTextNode(v)
+            val.appendChild(modif)
+        }
+
+        function affichage(valeur) {
+            op2 = 0
+            op = 0
+            oppjump = 0
+            cbuttonvalue = 0
+
+            if (cbuttonvalue == 0) {
+                cbut.innerText = "C"
+            }
+            
+            if (reset == 1 ) {
+                cal = 0
+                calp = 0
+                calcul = []
+                op = 0
+                op2 = 0
+                j = 0
+                reset = 0
+            }
+            
+            if (con == 1) {
+                if (ini == 0) {
+                calp = valeur
+                Display(calp)
+                ini ++
+                }
+                else{
+                calp = val.innerText + valeur
+                Display(calp)
+                }
+                calcul[j] = cal ** calp
+            }
+
+            if (con == 2) {
+                if (ini == 0) {
+                calp = valeur
+                Display(calp)
+                ini ++
+                }
+                else{
+                calp = val.innerText + valeur
+                Display(calp)
+                }
+                calcul[j] = cal ** (1/calp)
+            }
+
+            if (con == 0) {
+                if (ini == 0) {
+                cal = valeur
+                Display(cal)
+                ini ++
+            }
+            else{
+                cal = val.innerText + valeur
+                Display(cal)
+            }
+            calcul[j] = cal
+            }
+
+        }
+         
+        function operation(opp) {
+            op2 = 0
+            ini = 0
+            equaliteration = 0
+            repetpoint = 0
+
+            if (con == 1 || con == 2) {
+                Display(calcul[j])
+                con =0
+                
+            }
+
+            if (reset == 1) {
+                cal = eval(calcul.join(' '))
+                calcul = []
+                calcul[0] = cal
+                j = 0
+                op = 0
+                op2 = 0
+                oppjump = 0
+                reset = 0
+                
+            }
+         
+            
+            if (op == 0 && oppjump == 0) {
+                j++
+                calcul[j] = opp  
+                j++
+                op = 1
+                oppjump = 1
+                cal = 0
+            }
+            else{
+                calcul[j-1] = opp
+            }
+
+
+
+        }   
+
+        function operation2(opp) {
+            op = 0
+            ini = 0
+            equaliteration = 0
+            repetpoint = 0
+
+            if (con == 1 || con == 2) {
+                Display(calcul[j])
+                con =0
+                
+            }
+
+            if (reset == 1) {
+                cal = eval(calcul.join(' '))
+                calcul = []
+                calcul[0] = cal
+                j = 0
+                op = 0
+                op2 = 0
+                oppjump = 0
+                reset = 0
+            }
+
+            if (op2 == 0 && oppjump == 0) {
+                j++
+                calcul[j] = opp  
+                j++
+                op2 = 1
+                oppjump = 1
+            }
+            else{
+                calcul[j-1] = opp
+            }
+           
+        }   
+                
+        function equal() {
+    
+            if (equaliteration == 0) {
+                equaliteration++
+                cal = eval(calcul.join(' '))
+                Display(cal)
+                eqtmp1 = calcul[j-1]
+                eqtmp2 = calcul[j]
+
+            }
+            else{
+
+                calcul = []
+                calcul[0] = cal
+                calcul[1] = eqtmp1
+                calcul[2] = eqtmp2
+                cal = eval(calcul.join(' '))
+                Display(cal)
+
+            }
+
+            ini=0
+            reset = 1
+
+        }
+
+        function cbutton() {
+            var cbut = document.getElementById("spebutton")
+            
+            if ( cbuttonvalue == 0 ) {
+                op = 0
+                op2 = 0
+                cal = 0
+                cbuttonvalue ++
+                Display(0)
+            }
+            else{
+            cal = 0
+            calp = 0
+            calcul = []
+            op = 0
+            op2 = 0
+            ini = 0
+            j = 0
+            cbut.innerText = "CA"
+            Display(0)
+
+            }
+
+        }
+
+        function plusmoins() {
+            cal = -cal
+            calcul[j] = cal
+            Display(cal)
+        }
+
+        function percent() {
+
+            cal = cal/100
+            calcul[j] = cal
+            Display(cal)
+   
+        }
+      
+        function inverse() {
+
+            cal = 1/cal
+            calcul[j] = cal
+            Display(cal)
+
+        }
+
+        function power(po) {
+           
+            if (po == 2) {
+                cal = cal ** 2
+                calcul[j] = cal
+                Display(cal)
+   
+            }
+            
+            if (po == 3) {
+                cal = cal ** 3
+                calcul[j] = cal
+                Display(cal)
+   
+            }
+
+            if (po == 22) {
+                con = 1
+                ini = 0
+                
+            }
+
+            if (po == 33) {
+                con = 2
+                ini = 0
+            }
+
+
+        }
+
+        function sqrt() {
+
+          cal = Math.sqrt(cal)
+            calcul[j] = cal
+            Display(cal)
+        }
+        
+        function trigo(par) {
+            
+            if (par == "sin") {
+                if (degrad%2 == 0) {
+                    
+                    cal = Math.sin(cal)
+                    Display(cal)
+                }
+                
+                else if (degrad%2 == 1) {
+
+                    cal = Math.sin(cal*Math.PI/180)
+                    Display(cal)
+                    
+                }
+                
+                calcul[j] = cal
+            }
+
+            if (par == "cos") {
+                if (degrad%2 == 0) {
+                    
+                    cal = Math.cos(cal)
+                    Display(cal)
+                }
+                
+                else if (degrad%2 == 1) {
+
+                    cal = Math.cos(cal*Math.PI/180)
+                    Display(cal)
+                    
+                }
+                
+                calcul[j] = cal
+
+            }
+
+            if (par == "tan") {
+                if (degrad%2 == 0) {
+                    
+                    cal = Math.tan(cal)
+                    Display(cal)
+                }
+                
+                else if (degrad%2 == 1) {
+
+                    cal = Math.tan(cal*Math.PI/180)
+                    Display(cal)
+                    
+                }
+                
+                calcul[j] = cal
+
+            }
+
+            if (par == "sinh") {
+                if (degrad%2 == 0) {
+                    
+                    cal = Math.sinh(cal)
+                    Display(cal)
+                }
+                
+                else if (degrad%2 == 1) {
+
+                    cal = Math.sinh(cal*Math.PI/180)
+                    Display(cal)
+                    
+                }
+                
+                calcul[j] = cal
+
+            }
+
+            if (par == "cosh") {
+                if (degrad%2 == 0) {
+                    
+                    cal = Math.cosh(cal)
+                    Display(cal)
+                }
+                
+                else if (degrad%2 == 1) {
+
+                    cal = Math.cosh(cal*Math.PI/180)
+                    Display(cal)
+                    
+                }
+                
+                calcul[j] = cal
+
+            }
+
+            if (par == "tanh") {
+                if (degrad%2 == 0) {
+                    
+                    cal = Math.tanh(cal)
+                    Display(cal)
+                }
+                
+                else if (degrad%2 == 1) {
+
+                    cal = Math.tanh(cal*Math.PI/180)
+                    Display(cal)
+                    
+                }
+                
+                calcul[j] = cal
+
+            }
+
+            if (par == "π" ) {
+                cal = Math.PI
+                Display(cal)
+                calcul[j] = cal
+                
+            }
+
+            
+        }
+     
+        function degtorad() {
+            degrad++
+            if (degrad%2 == 1) {
+                var deg = document.getElementById("degrad")
+                var radaff = document.getElementById("radid")
+                deg.innerText="Deg"
+                radaff.innerText = "Deg"
+            }
+
+            if (degrad%2 == 0) {
+                var deg = document.getElementById("degrad")
+                var radaff = document.getElementById("radid")
+                deg.innerText="Rad"
+                radaff.innerText = "Rad"
+            }
+        }
+
+        function xfactoriel() {
+
+                cal = parseInt(cal)
+                var x = cal - 1
+                do {
+                    cal = cal * x
+                    x--
+                } while (x>0);
+                Display(cal)
+           }
+        
+        function logexp(p) {
+            
+            if (p == "eX") {
+                cal = Math.exp(cal)
+                Display(cal)
+                calcul[j] = cal
+            }
+
+            if (p == "ln") {
+                cal = Math.log(cal)
+                Display(cal)
+                calcul[j] = cal
+            }
+
+            if (p == "log") {
+                cal = Math.log10(cal)
+                Display(cal)
+                calcul[j] = cal
+            }
+
+            if (p == "rnd") {
+                cal = Math.random(5)
+                Display(cal)
+                calcul[j] = cal
+            }
+
+        }
+
+        function point(valeur) {
+
+            if (repetpoint == 0) {
+                if (ini == 0 && con == 0) {
+
+                }
+                else{
+                    cal = val.innerText + valeur
+                    Display(cal)
+                    calcul[j] = cal
+                    repetpoint++
+                }
+            }
+            else{
+
+            }
+            
+        }
+</script>
+</html>
